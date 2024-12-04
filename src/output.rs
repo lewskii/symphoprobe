@@ -1,4 +1,6 @@
 use symphonia::core::codecs::CodecParameters;
+use symphonia::core::units::Time;
+use symphonia::default::get_codecs;
 use crate::print::{debug_option, display, display_option};
 
 /// Print all properties in a given audio parameter struct.
@@ -44,4 +46,58 @@ pub fn full(properties: CodecParameters) {
     display("packet data integrity", properties.packet_data_integrity);
     // literally just a bunch of bytes, probably some ultra nerd shit
     debug_option("extra data", properties.extra_data);
+}
+
+/// Print the most useful information about an audio file.
+/// 
+/// "Most useful" is defined in terms of what I want to do. This includes
+/// the following:
+/// - the name of the codec
+/// - sample rate
+/// - timebase
+/// - number of frames
+/// - number of channels
+pub fn core(properties: CodecParameters) {
+    if let Some(codec_info) = get_codecs().get_codec(properties.codec) {
+        println!("codec: {} ({})", codec_info.short_name, codec_info.long_name);
+    } else {
+        println!("unidentified codec");
+    }
+
+    if let Some(channels) = properties.channels {
+        display("channels", channels.count());
+    }
+
+    debug_option("duration (s)", get_duration(&properties));
+
+    display_option("sample rate", properties.sample_rate);
+    display_option("timebase", properties.time_base);
+    display_option("number of frames", properties.n_frames);
+    display_option("number of samples", get_n_samples(&properties));
+}
+
+/// Find the duration of an audio file if possible.
+fn get_duration(properties: &CodecParameters) -> Option<Time> {
+    if let Some(timebase) = properties.time_base {
+        if let Some(n_frames) = properties.n_frames {
+            Some(timebase.calc_time(n_frames))
+        } else {
+            None
+        }
+    } else {
+        None
+    }
+}
+
+/// Find the total number of samples in an audio file if possible.
+fn get_n_samples(properties: &CodecParameters) -> Option<u64> {
+    if let Some(channels) = properties.channels {
+        if let Some(n_frames) = properties.n_frames {
+            Some(n_frames * channels.count() as u64)
+        } else {
+            None
+        }
+    } else {
+        None
+    }
 }
