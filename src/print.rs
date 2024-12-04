@@ -1,8 +1,17 @@
 use std::fmt::{Debug, Display};
 
 /// Directly print a value and its name.
+/// 
+/// Uses the Display representation.
 pub fn display<T: Display>(name: &str, thing: T) {
     println!("{}: {}", name, thing)
+}
+
+/// Directly print a value and its name.
+/// 
+/// Uses the Debug representation.
+pub fn debug<T: Debug>(name: &str, thing: T) {
+    println!("{}: {:?}", name, thing)
 }
 
 /// Print the name and content of an Option, or "none" if appropriate.
