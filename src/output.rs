@@ -1,7 +1,12 @@
 use symphonia::core::codecs::CodecParameters;
 use symphonia::core::units::Time;
 use symphonia::default::get_codecs;
-use crate::print::{debug_option, display, display_option};
+use crate::print::{
+    debug_option,
+    display,
+    display_option,
+    print_time_option
+};
 
 /// Print all properties in a given audio parameter struct.
 /// 
@@ -68,7 +73,7 @@ pub fn core(properties: &CodecParameters) {
         display("channels", &channels.count());
     }
 
-    debug_option("duration (s)", &get_duration(&properties));
+    print_time_option("duration (s)", &get_duration(&properties));
 
     display_option("sample rate", &properties.sample_rate);
     display_option("timebase", &properties.time_base);
