@@ -1,52 +1,52 @@
 use std::fmt::{Debug, Display};
 use symphonia::core::units::Time;
 
-/// Directly print a value and its name.
+/// Directly print a value with a label.
 /// 
 /// Uses the Display representation.
-pub fn display<T: Display>(name: &str, thing: &T) {
-    println!("{}: {}", name, thing)
+pub fn display<T: Display>(label: &str, thing: &T) {
+    println!("{}: {}", label, thing)
 }
 
-/// Directly print a value and its name.
+/// Directly print a value with a label.
 /// 
 /// Uses the Debug representation.
-pub fn debug<T: Debug>(name: &str, thing: &T) {
-    println!("{}: {:?}", name, thing)
+pub fn debug<T: Debug>(label: &str, thing: &T) {
+    println!("{}: {:?}", label, thing)
 }
 
-/// Print the name and content of an Option, or "none" if appropriate.
+/// Print the content of an Option with a label, or "none" if appropriate.
 /// 
 /// Uses the Display representation.
-pub fn display_option<T: Display>(name: &str, option: &Option<T>) {
+pub fn display_option<T: Display>(label: &str, option: &Option<T>) {
     match option {
-        Some(thing) => println!("{}: {}", name, thing),
-        None => println!("{}: none", name)
+        Some(thing) => println!("{}: {}", label, thing),
+        None => println!("{}: none", label)
     }
 }
 
-/// Print the name and content of an Option, or "none" if appropriate.
+/// Print the content of an Option with a label, or "none" if appropriate.
 /// 
 /// Uses the Debug representation.
-pub fn debug_option<T: Debug>(name: &str, option: &Option<T>) {
+pub fn debug_option<T: Debug>(label: &str, option: &Option<T>) {
     match option {
-        Some(thing) => println!("{}: {:?}", name, thing),
-        None => println!("{}: none", name)
+        Some(thing) => println!("{}: {:?}", label, thing),
+        None => println!("{}: none", label)
     }
 }
 
-/// Print a human-friendly representation of an Option<Time>.
-pub fn print_time_option(name: &str, time_opt: &Option<Time>) {
+/// Print a human-friendly representation of an Option<Time> with a label.
+pub fn print_time_option(label: &str, time_opt: &Option<Time>) {
     match time_opt {
         Some(time) => {
             let seconds = time.seconds.to_string();
             // strip the leading 0
             // this way we can just append the decimal part to the int part
             let frac = time.frac.to_string().split_off(1);
-            println!("{}: {}{}", name, seconds, frac);
+            println!("{}: {}{}", label, seconds, frac);
         }
         None => {
-            println!("{}: none", name);
+            println!("{}: none", label);
         }
     }
 }
