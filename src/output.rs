@@ -8,6 +8,8 @@ use crate::print::{
     print_time_option
 };
 
+pub type OutputFn = fn(&CodecParameters) -> ();
+
 /// Print all properties in a given audio parameter struct.
 /// 
 /// Raw properties, no interpretation beyond the choice of Display/Debug and
@@ -106,3 +108,5 @@ fn get_n_samples(properties: &CodecParameters) -> Option<u64> {
         None
     }
 }
+
+pub const DEFAULT_OUTPUT: OutputFn = core;
