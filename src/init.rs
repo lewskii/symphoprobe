@@ -40,7 +40,7 @@ pub fn select_output() -> Result<output::OutputFn, String> {
             match name.as_str() {
                 "full" => Ok(output::full),
                 "core" => Ok(output::core),
-                _ => Err(format!("invalid output function: {}", name))
+                _ => Err(format!("invalid output function: {}. available functions: core, full", name))
             }
         }
     }
