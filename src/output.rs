@@ -109,4 +109,4 @@ fn get_n_samples(properties: &CodecParameters) -> Option<u64> {
     }
 }
 
-pub const DEFAULT_OUTPUT: OutputFn = core;
+pub const DEFAULT_FN: OutputFn = core;

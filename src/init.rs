@@ -35,7 +35,7 @@ pub fn get_source_file() -> Result<File, String> {
 pub fn select_output() -> Result<output::OutputFn, String> {
     let args: Vec<String> = std::env::args().collect();
     match args.get(2) {
-        None => Ok(output::DEFAULT_OUTPUT),
+        None => Ok(output::DEFAULT_FN),
         Some(name) => {
             match name.as_str() {
                 "full" => Ok(output::full),
