@@ -1,4 +1,4 @@
-
+use crate::output;
 use std::fs::File;
 use symphonia::default::get_probe;
 use symphonia::core::{
@@ -28,6 +28,20 @@ pub fn get_source_file() -> Result<File, String> {
         Ok(file) => Ok(file),
         Err(err) => {
             return Err(format!("failed to open '{}': {}", input_path, err))
+        }
+    }
+}
+
+pub fn select_output() -> Result<output::OutputFn, String> {
+    let args: Vec<String> = std::env::args().collect();
+    match args.get(2) {
+        None => Ok(output::DEFAULT_OUTPUT),
+        Some(name) => {
+            match name.as_str() {
+                "full" => Ok(output::full),
+                "core" => Ok(output::core),
+                _ => Err(format!("invalid output function: {}", name))
+            }
         }
     }
 }
