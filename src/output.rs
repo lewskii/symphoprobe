@@ -52,7 +52,8 @@ pub fn full(properties: &CodecParameters) {
     // probably doesn't have many use cases outside of Symphonia internals
     display("packet data integrity", &properties.packet_data_integrity);
     // literally just a bunch of bytes, probably some ultra nerd shit
-    debug_option("extra data", &properties.extra_data);
+    // fills the screen on OGG Vorbis so it needs to die
+    // debug_option("extra data", &properties.extra_data);
 }
 
 /// Print the most useful information about an audio file.
